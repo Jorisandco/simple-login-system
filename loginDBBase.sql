@@ -42,8 +42,8 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`id`, `username`, `password`, `admin`) VALUES
 (1, 'JorisandCo', 'test', 1),
-(7, 'joris', 'notjoris', 1),
-(8, 'joe', 'makeithappen', 0);
+(2, 'joris', 'notjoris', 0),
+(3, 'joe', 'makeithappen', 0);
 
 --
 -- Indexes for dumped tables
