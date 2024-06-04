@@ -7,8 +7,20 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
     height: 43%;
     width: 30%;
+    border: 2px black solid;
+    border-radius: 25px;
+}
+
+.wrapperAD{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 80%;
+    width: 75%;
     border: 2px black solid;
     border-radius: 25px;
 }
