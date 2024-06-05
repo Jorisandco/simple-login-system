@@ -1,17 +1,20 @@
 <?php
 session_start();
 
-echo "hello $_SESSION[username] ";
 
-if (!isset($_SESSION['username'])) {
+
+if (!isset($_SESSION["session_id"]) && $_SESSION["session_id"] != session_id()) {
     header("Location: login.php");
-}
+} else {
 
-$data = null;
+    echo "hello $_SESSION[username] ";
 
-if ($_SESSION['admin'] == 1) {
-    echo "You are an admin";
-    $data .= "<a href='admin.php'>Admin</a>";
+    $data = null;
+
+    if ($_SESSION['admin'] == 1) {
+        echo "You are an admin";
+        $data .= "<a href='admin.php'>Admin</a>";
+    }
 }
 ?>
 <!DOCTYPE html>

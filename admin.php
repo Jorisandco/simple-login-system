@@ -14,7 +14,7 @@ if (!isset($_SESSION['username'])) {
 $acounts = database::getallacounts();
 $acountdump = null;
 
-if(isset($_GET['search'])){
+if (isset($_GET['search'])) {
     $acounts = database::searchacounts($_GET['search']);
 }
 foreach ($acounts as $acount) {
@@ -32,17 +32,22 @@ foreach ($acounts as $acount) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>adminpannel</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
-    <form type="get">
-        <input type="text" name="search"> 
-        <input type="submit" value="search">
-        <a href="admin.php">clear search</a>
-    </form>
+    <div class="setcenter">
+        <div class="wrapperAD">
 
-    <?= $acountdump; ?>
+            <form type="get">
+                <input type="text" name="search">
+                <input type="submit" value="search">
+                <a href="admin.php">clear search</a>
+            </form>
 
+            <?= $acountdump; ?>
+        </div>
+    </div>
     <a href="functiononly_pages/logout.php">Logout admin(self)</a>
     <a href="index.php">leave admin pannel</a>
 </body>
