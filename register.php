@@ -8,10 +8,11 @@ if (isset($_POST["username"]) && isset($_POST["password"])) {
         die();
     }
     $username = HTMLSPECIALCHARS($_POST['username']);
-    $password = HTMLSPECIALCHARS($_POST['password']);
+    $password = ($_POST['password']);
 
     database::adduser($username, $password);
 
+    echo database::$error;
     header("Location: login.php");
 }
 ?>

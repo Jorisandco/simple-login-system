@@ -1,6 +1,9 @@
 <?php
 class database
 {
+
+    public static $error;
+
     public static function connect()
     {
         $servername = "localhost";
@@ -16,53 +19,55 @@ class database
             $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
             return $pdo;
         } catch (PDOException $e) {
-            echo "Connection failed: " . $e->getMessage();
+            self::$error = $e->getMessage();
         }
     }
     public static function adduser($username, $password)
     {
         $database = self::connect();
         try {
+            $hashedpassword = password_hash($password, PASSWORD_DEFAULT);
             $sql = "INSERT INTO user (username, password) VALUES (:username, :password)";
-
             $statement = $database->prepare($sql);
             $statement->bindParam(':username', $username);
-            $statement->bindParam(':password', $password);
+            $statement->bindParam(':password', $hashedpassword);
             $statement->execute();
             return true;
         } catch (PDOException $e) {
-            echo "Error: " . $e->getMessage();
+            self::$error = $e->getMessage();
+            echo $e->getMessage();
         }
     }
-
     public static function login($username, $password)
     {
         $database = self::connect();
         try {
-            $sql = "SELECT * FROM user WHERE username = :username AND password = :password";
+            $sql = "SELECT * FROM user WHERE username = :username";
             $statement = $database->prepare($sql);
             $statement->bindParam(':username', $username);
-            $statement->bindParam(':password', $password);
             $statement->execute();
             $result = $statement->fetch();
-            if ($result['admin'] == 1) {
-                $_SESSION['admin'] = true;
-                return $result;
-            } else {
-                $_SESSION['admin'] = false;
-                if ($result) {
+            if (password_verify($password, $result['password'])) {
+                if ($result['admin'] == 1) {
+                    $_SESSION['admin'] = true;
                     return $result;
                 } else {
-                    return false;
+                    $_SESSION['admin'] = false;
+                    if ($result) {
+                        return $result;
+                    } else {
+                        return false;
+                    }
                 }
+            } else {
+                return false;
             }
-
         } catch (PDOException $e) {
-            echo "Error: " . $e->getMessage();
+            self::$error = $e->getMessage();
         }
     }
-
-    public static function getallacounts(){
+    public static function getallacounts()
+    {
         $database = self::connect();
         try {
             $sql = "SELECT * FROM user";
@@ -71,11 +76,11 @@ class database
             $result = $statement->fetchAll();
             return $result;
         } catch (PDOException $e) {
-            echo "Error: " . $e->getMessage();
+            self::$error = $e->getMessage();
         }
     }
-
-    public static function deleteacount($username){
+    public static function deleteacount($username)
+    {
         $database = self::connect();
         try {
             $sql = "DELETE FROM user WHERE username = :username";
@@ -84,11 +89,11 @@ class database
             $statement->execute();
             return true;
         } catch (PDOException $e) {
-            echo "Error: " . $e->getMessage();
+            self::$error = $e->getMessage();
         }
     }
-
-    public static function promoteacount($username){
+    public static function promoteacount($username)
+    {
         $database = self::connect();
         try {
             $sql = "UPDATE user SET admin = 1 WHERE username = :username";
@@ -97,11 +102,12 @@ class database
             $statement->execute();
             return true;
         } catch (PDOException $e) {
-            echo "Error: " . $e->getMessage();
+            self::$error = $e->getMessage();
         }
     }
 
-    public static function searchacounts($search){
+    public static function searchacounts($search)
+    {
         $database = self::connect();
         try {
             $search = "%$search%";
@@ -112,7 +118,7 @@ class database
             $result = $statement->fetchAll();
             return $result;
         } catch (PDOException $e) {
-            echo "Error: " . $e->getMessage();
+            self::$error = $e->getMessage();
         }
     }
 }
