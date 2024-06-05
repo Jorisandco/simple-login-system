@@ -49,7 +49,7 @@ class database
             $statement->bindParam(':username', $username);
             $statement->execute();
             $result = $statement->fetch();
-            if (password_verify($password, $result['password'])) {
+            if ($result && password_verify($password, $result['password'])) {
                 if ($result['admin'] == 1) {
                     $_SESSION['admin'] = true;
                     return $result;

@@ -1,5 +1,6 @@
 <?php
 session_start();
+$data2 = "<h1>login</h1>";
 
 include_once 'classes/database.php';
 
@@ -14,7 +15,7 @@ if (isset($_POST["username"]) && isset($_POST["password"])) {
         $_SESSION["session_id"] = session_id();
         header("Location: index.php");
     } else {
-        echo "Login failed";
+        $data2 = "<h1 style='color: red'>Invalid username and/or password</h1>";
     }
 }
 ?>
@@ -32,6 +33,7 @@ if (isset($_POST["username"]) && isset($_POST["password"])) {
     <div class="container">
         <div class="setcenter">
             <div class="wrapper">
+                <?=$data2?>
                 <form id="registform" action="login.php" method="post">
                     <label for="username">Username</label>
                     <input type="text" name="username" id="username" required>
