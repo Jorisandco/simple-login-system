@@ -20,6 +20,7 @@ class database
             return $pdo;
         } catch (PDOException $e) {
             self::$error = $e->getMessage();
+            return self::$error;
         }
     }
     public static function adduser($username, $password)
@@ -34,8 +35,9 @@ class database
             $statement->execute();
             return true;
         } catch (PDOException $e) {
-            self::$error = $e->getMessage();
             echo $e->getMessage();
+            self::$error = $e->getMessage();
+            return self::$error;
         }
     }
     public static function login($username, $password)
@@ -64,6 +66,7 @@ class database
             }
         } catch (PDOException $e) {
             self::$error = $e->getMessage();
+            return self::$error;
         }
     }
     public static function getallacounts()
@@ -77,6 +80,7 @@ class database
             return $result;
         } catch (PDOException $e) {
             self::$error = $e->getMessage();
+            return self::$error;
         }
     }
     public static function deleteacount($username)
@@ -90,6 +94,7 @@ class database
             return true;
         } catch (PDOException $e) {
             self::$error = $e->getMessage();
+            return self::$error;
         }
     }
     public static function promoteacount($username)
@@ -103,6 +108,7 @@ class database
             return true;
         } catch (PDOException $e) {
             self::$error = $e->getMessage();
+            return self::$error;
         }
     }
 
@@ -119,6 +125,7 @@ class database
             return $result;
         } catch (PDOException $e) {
             self::$error = $e->getMessage();
+            return self::$error;
         }
     }
 }

@@ -30,6 +30,7 @@ if (isset($_POST["username"]) && isset($_POST["password"])) {
 <body>
     <div class="setcenter">
         <div class="wrapper">
+            <h1 id="error" >Register</h1>
             <form id="registform" method="post">
                 <label for="username">Username</label>
                 <input type="text" name="username" id="username">
@@ -42,5 +43,17 @@ if (isset($_POST["username"]) && isset($_POST["password"])) {
         </div>
     </div>
 </body>
-
+<script>
+    document.getElementById("registform").addEventListener("submit", function(e) {
+        let password = document.getElementById("password").value;
+        let password_repeat = document.getElementById("password_repeat").value;
+        if (password != password_repeat) {
+            let messagespace = document.getElementById("error");
+            messagespace.innerText = "Passwords do not match";
+            messagespace.style.color = "red";
+            
+            e.preventDefault();
+        }
+    });
+</script>
 </html>
