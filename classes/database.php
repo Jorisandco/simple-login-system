@@ -77,7 +77,15 @@ class database
             $statement = $database->prepare($sql);
             $statement->execute();
             $result = $statement->fetchAll();
-            return $result;
+            $acounts = null;
+            foreach ($result as $acount) {
+                $acounts .= "<p>$acount[username]</p>";
+                $acounts .= "<a href='functiononly_pages/delete.php?username=$acount[username]'>Delete</a> <br> <br>";
+                if ($acount['admin'] == 0) {
+                    $acounts .= "<a href='functiononly_pages/promote.php?username=$acount[username]'>Promote</a> <br> <br>";
+                }
+            }
+            return $acounts;
         } catch (PDOException $e) {
             self::$error = $e->getMessage();
             return self::$error;

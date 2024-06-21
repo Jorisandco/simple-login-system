@@ -6,13 +6,12 @@ session_start();
 if (!isset($_SESSION["session_id"]) && $_SESSION["session_id"] != session_id()) {
     header("Location: login.php");
 } else {
-
-    echo "hello $_SESSION[username] ";
-
     $data = null;
 
+    $data .= "hello $_SESSION[username] ";
+
     if ($_SESSION['admin'] == 1) {
-        echo "You are an admin";
+        $data .= "You are an admin ";
         $data .= "<a href='admin.php'>Admin</a>";
     }
 }
@@ -27,9 +26,8 @@ if (!isset($_SESSION["session_id"]) && $_SESSION["session_id"] != session_id()) 
 </head>
 
 <body>
-    <a href="functiononly_pages/logout.php">Logout</a>
-
     <?= $data; ?>
+    <a href="functiononly_pages/logout.php">Logout</a>
 </body>
 
 </html>
