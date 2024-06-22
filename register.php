@@ -4,7 +4,6 @@ include_once 'classes/database.php';
 //$database = database::connect();
 if (isset($_POST["username"]) && isset($_POST["password"])) {
     if ($_POST["password"] != $_POST["password_repeat"]) {
-        echo "Passwords do not match";
         die();
     }
     $username = HTMLSPECIALCHARS($_POST['username']);
@@ -12,7 +11,6 @@ if (isset($_POST["username"]) && isset($_POST["password"])) {
 
     database::adduser($username, $password);
 
-    echo database::$error;
     header("Location: login.php");
 }
 ?>
@@ -43,17 +41,5 @@ if (isset($_POST["username"]) && isset($_POST["password"])) {
         </div>
     </div>
 </body>
-<script>
-    document.getElementById("registform").addEventListener("submit", function(e) {
-        let password = document.getElementById("password").value;
-        let password_repeat = document.getElementById("password_repeat").value;
-        if (password != password_repeat) {
-            let messagespace = document.getElementById("error");
-            messagespace.innerText = "Passwords do not match";
-            messagespace.style.color = "red";
-            
-            e.preventDefault();
-        }
-    });
-</script>
+<script src="js/General.js"></script>
 </html>
