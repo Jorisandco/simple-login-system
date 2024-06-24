@@ -9,8 +9,7 @@ if (isset($_POST["username"]) && isset($_POST["password"])) {
     $password = htmlspecialchars($_POST['password']);
     $login = database::login($username, $password);
 
-    if ($login) {
-        var_dump($login);
+    if (isset($login)) {
         $_SESSION['username'] = $username;
         $_SESSION["session_id"] = session_id();
         header("Location: index.php");
