@@ -1,8 +1,6 @@
 <?php
 session_start();
 
-
-
 if (!isset($_SESSION["session_id"]) && $_SESSION["session_id"] != session_id()) {
     header("Location: login.php");
 } else {
